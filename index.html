@@ -97,27 +97,30 @@ button{
     font-size:1em;
 }
 
-/* Fuegos artificiales */
-.firework{
+/* CORAZONES FLOTANDO */
+.heart{
     position:fixed;
-    width:5px;
-    height:5px;
-    border-radius:50%;
-    animation:explode 1s ease-out forwards;
+    font-size:24px;
+    animation: floatUp 4s ease-out forwards;
+    pointer-events: none;
 }
 
-@keyframes explode{
-    to{
-        transform:scale(20);
-        opacity:0;
+@keyframes floatUp{
+    0%{
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(-600px) scale(2);
+        opacity: 0;
     }
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- AUDIO CON ID PARA CONTROLARLO DESDE JAVASCRIPT -->
 <audio id="musica" loop>
     <source src="ojitos_lindos.mp3" type="audio/mpeg">
 </audio>
@@ -163,7 +166,7 @@ for(let i=0;i<100;i++){
     document.getElementById("stars").appendChild(star);
 }
 
-/* Abrir carta Y REPRODUCIR MÚSICA */
+/* Abrir carta y reproducir música */
 function abrirCarta(){
     document.querySelector(".carta").style.display="none";
     document.getElementById("contenido").style.display="block";
@@ -194,22 +197,26 @@ noBtn.addEventListener("mouseover",()=>{
     noBtn.style.top=y+"px";
 });
 
-/* Aceptar */
+/* Aceptar - ahora lanza corazones */
 function aceptar(){
     document.getElementById("final").style.display="block";
-    lanzarFuegos();
+    lanzarCorazones();
 }
 
-/* Fuegos artificiales */
-function lanzarFuegos(){
+/* ANIMACIÓN DE CORAZONES */
+function lanzarCorazones(){
     setInterval(()=>{
-        let fuego=document.createElement("div");
-        fuego.classList.add("firework");
-        fuego.style.background="hsl("+Math.random()*360+",100%,50%)";
-        fuego.style.top=Math.random()*100+"%";
-        fuego.style.left=Math.random()*100+"%";
-        document.body.appendChild(fuego);
-        setTimeout(()=>{fuego.remove();},1000);
+        let heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="💖";
+
+        heart.style.left=Math.random()*100+"%";
+        heart.style.top="80%";
+        heart.style.fontSize=(Math.random()*20+20)+"px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{heart.remove();},4000);
     },300);
 }
 
