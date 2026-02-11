@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cristina 💖</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI', cursive;
+    background: radial-gradient(circle at top,#1a001f,#000);
+    color:white;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* Estrellas */
+.stars{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background: transparent;
+    z-index:-1;
+}
+
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:0.3;}
+    to{opacity:1;}
+}
+
+/* Carta */
+.carta{
+    width:90%;
+    max-width:350px;
+    height:220px;
+    background:#ff4b5c;
+    margin:100px auto;
+    border-radius:15px;
+    position:relative;
+    cursor:pointer;
+    transition:0.6s;
+    box-shadow:0 0 20px rgba(255,0,90,0.6);
+}
+
+.carta::before{
+    content:"💌";
+    font-size:60px;
+    position:absolute;
+    top:70px;
+    left:0;
+    right:0;
+}
+
+.contenido{
+    display:none;
+    padding:20px;
+    animation:fade 1s ease-in-out;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+button{
+    padding:12px 25px;
+    font-size:1.1em;
+    border:none;
+    border-radius:25px;
+    margin:10px;
+    cursor:pointer;
+}
+
+.yes{
+    background:#ff4b5c;
+    color:white;
+}
+
+.no{
+    background:white;
+    color:#ff4b5c;
+    position:absolute;
+}
+
+/* Contador */
+.contador{
+    margin-top:10px;
+    font-size:1em;
+}
+
+/* Fuegos artificiales */
+.firework{
+    position:fixed;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    animation:explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+    to{
+        transform:scale(20);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="TU_CANCION.mp3" type="audio/mpeg">
+</audio>
+
+<div class="stars" id="stars"></div>
+
+<div class="carta" onclick="abrirCarta()"></div>
+
+<div class="contenido" id="contenido">
+
+<h2>Para mi Cristina 💖</h2>
+
+<p>
+Desde el 03 de junio del 2025 comenzó mi historia favorita.
+Tú, con tus ojitos lindos, cambiaste todo en mí.
+Eres mi calma, mi alegría, mi sueño bonito.
+</p>
+
+<div class="contador" id="contador"></div>
+
+<h2>¿Quieres ser mi San Valentín? 💘</h2>
+
+<button class="yes" onclick="aceptar()">Sí, obvio 💕</button>
+<button class="no" id="noBtn">No 😢</button>
+
+<div id="final" style="display:none; margin-top:20px; font-size:1.5em;">
+💖 Eres el amor más bonito que me pudo tocar 💖<br><br>
+Prometo cuidar tus ojitos lindos toda la vida ✨<br><br>
+Te amo Cristina 🌹
+</div>
+
+</div>
+
+<script>
+
+/* Generar estrellas */
+for(let i=0;i<100;i++){
+    let star=document.createElement("div");
+    star.classList.add("star");
+    star.style.top=Math.random()*100+"%";
+    star.style.left=Math.random()*100+"%";
+    star.style.animationDuration=(Math.random()*2+1)+"s";
+    document.getElementById("stars").appendChild(star);
+}
+
+/* Abrir carta */
+function abrirCarta(){
+    document.querySelector(".carta").style.display="none";
+    document.getElementById("contenido").style.display="block";
+}
+
+/* Contador */
+const fechaInicio=new Date("2025-06-03T00:00:00");
+const contador=document.getElementById("contador");
+
+function actualizar(){
+    const ahora=new Date();
+    const diff=ahora-fechaInicio;
+    const dias=Math.floor(diff/(1000*60*60*24));
+    contador.innerHTML=`Llevamos ${dias} días juntos 💕`;
+}
+setInterval(actualizar,1000);
+actualizar();
+
+/* Botón que se escapa */
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+    const x=Math.random()*(window.innerWidth-100);
+    const y=Math.random()*(window.innerHeight-50);
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+});
+
+/* Aceptar */
+function aceptar(){
+    document.getElementById("final").style.display="block";
+    lanzarFuegos();
+}
+
+/* Fuegos artificiales */
+function lanzarFuegos(){
+    setInterval(()=>{
+        let fuego=document.createElement("div");
+        fuego.classList.add("firework");
+        fuego.style.background="hsl("+Math.random()*360+",100%,50%)";
+        fuego.style.top=Math.random()*100+"%";
+        fuego.style.left=Math.random()*100+"%";
+        document.body.appendChild(fuego);
+        setTimeout(()=>{fuego.remove();},1000);
+    },300);
+}
+
+</script>
+
+</body>
+</html>
