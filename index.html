@@ -79,6 +79,17 @@ button{
     cursor:pointer;
 }
 
+/* CONTENEDOR DE BOTONES CENTRADO */
+.botones{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-top:10px;
+    position:relative;
+}
+
 .yes{
     background:#ff4b5c;
     color:white;
@@ -87,7 +98,7 @@ button{
 .no{
     background:white;
     color:#ff4b5c;
-    position:absolute;
+    position:relative;
 }
 
 .controlMusica{
@@ -125,9 +136,21 @@ button{
 /* Foto */
 .foto{
     width:200px;
+    max-width:90%;
     border-radius:15px;
     margin-top:15px;
     box-shadow:0 0 15px rgba(255,255,255,0.5);
+}
+
+@media(max-width:600px){
+    h2{
+        font-size:1.3em;
+    }
+
+    button{
+        font-size:1em;
+        padding:10px 20px;
+    }
 }
 
 </style>
@@ -155,20 +178,20 @@ Tú, con tus ojitos lindos, cambiaste todo en mí.<br>
 Eres mi calma, mi alegría, mi paz y tranquilidad.
 </p>
 
-<!-- AQUÍ VA LA FOTO -->
 <img src="foto.jpg" class="foto" alt="Nosotros">
 
 <div class="contador" id="contador"></div>
 
-<!-- BOTÓN PARA CONTROLAR MÚSICA -->
 <button class="controlMusica" onclick="controlMusica()" id="btnMusica">
 Pausar Música 🎵
 </button>
 
 <h2>¿Quieres ser mi San Valentín? 💘</h2>
 
-<button class="yes" onclick="aceptar()">Sí, obvio 💕</button>
-<button class="no" id="noBtn">No 😢</button>
+<div class="botones">
+    <button class="yes" onclick="aceptar()">Sí, obvio 💕</button>
+    <button class="no" id="noBtn">No 😢</button>
+</div>
 
 <div id="final" style="display:none; margin-top:20px; font-size:1.5em;">
 💖 Eres el amor más bonito que me pudo tocar 💖<br><br>
@@ -212,16 +235,7 @@ function actualizar(){
 setInterval(actualizar,1000);
 actualizar();
 
-/* Botón que se escapa */
-const noBtn=document.getElementById("noBtn");
-noBtn.addEventListener("mouseover",()=>{
-    const x=Math.random()*(window.innerWidth-100);
-    const y=Math.random()*(window.innerHeight-50);
-    noBtn.style.left=x+"px";
-    noBtn.style.top=y+"px";
-});
-
-/* Aceptar - lanzar corazones */
+/* Aceptar */
 function aceptar(){
     document.getElementById("final").style.display="block";
     lanzarCorazones();
@@ -257,6 +271,28 @@ function controlMusica(){
         btn.innerHTML = "Reproducir Música ▶️";
     }
 }
+
+/* BOTÓN NO ESCAPISTA 😄 */
+
+const noBtn = document.getElementById("noBtn");
+
+function moverBoton(){
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+/* En PC: se escapa del mouse */
+noBtn.addEventListener("mouseover", moverBoton);
+
+/* En celular: se escapa del dedo y bloquea el clic */
+noBtn.addEventListener("touchstart", function(e){
+    e.preventDefault();
+    moverBoton();
+});
 
 </script>
 
