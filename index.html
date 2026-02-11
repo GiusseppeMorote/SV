@@ -12,7 +12,6 @@ body{
     background: radial-gradient(circle at top,#1a001f,#000);
     color:white;
     text-align:center;
-    overflow:hidden;
 }
 
 /* Estrellas */
@@ -91,18 +90,25 @@ button{
     position:absolute;
 }
 
+.controlMusica{
+    background:#222;
+    color:white;
+    font-size:0.9em;
+}
+
 /* Contador */
 .contador{
     margin-top:10px;
     font-size:1em;
 }
 
-/* CORAZONES FLOTANDO */
+/* CORAZONES */
 .heart{
     position:fixed;
     font-size:24px;
     animation: floatUp 4s ease-out forwards;
     pointer-events: none;
+    z-index: 9999;
 }
 
 @keyframes floatUp{
@@ -111,9 +117,17 @@ button{
         opacity: 1;
     }
     100%{
-        transform: translateY(-600px) scale(2);
+        transform: translateY(-800px) scale(2);
         opacity: 0;
     }
+}
+
+/* Foto */
+.foto{
+    width:200px;
+    border-radius:15px;
+    margin-top:15px;
+    box-shadow:0 0 15px rgba(255,255,255,0.5);
 }
 
 </style>
@@ -134,12 +148,20 @@ button{
 <h2>Para mi Cristina 💖</h2>
 
 <p>
-Desde el 03 de junio del 2025 comenzó mi historia favorita.
-Tú, con tus ojitos lindos, cambiaste todo en mí.
+Desde el 03 de junio del 2025 comenzó mi historia favorita.<br>
+Tú, con tus ojitos lindos, cambiaste todo en mí.<br>
 Eres mi calma, mi alegría, mi sueño bonito.
 </p>
 
+<!-- AQUÍ VA LA FOTO -->
+<img src="foto.jpg" class="foto" alt="Nosotros">
+
 <div class="contador" id="contador"></div>
+
+<!-- BOTÓN PARA CONTROLAR MÚSICA -->
+<button class="controlMusica" onclick="controlMusica()" id="btnMusica">
+Pausar Música 🎵
+</button>
 
 <h2>¿Quieres ser mi San Valentín? 💘</h2>
 
@@ -197,27 +219,41 @@ noBtn.addEventListener("mouseover",()=>{
     noBtn.style.top=y+"px";
 });
 
-/* Aceptar - ahora lanza corazones */
+/* Aceptar - lanzar corazones */
 function aceptar(){
     document.getElementById("final").style.display="block";
     lanzarCorazones();
 }
 
-/* ANIMACIÓN DE CORAZONES */
+/* Corazones animados */
 function lanzarCorazones(){
     setInterval(()=>{
         let heart=document.createElement("div");
         heart.classList.add("heart");
         heart.innerHTML="💖";
 
-        heart.style.left=Math.random()*100+"%";
-        heart.style.top="80%";
+        heart.style.left=Math.random()*90 + "%";
+        heart.style.bottom="0px";
         heart.style.fontSize=(Math.random()*20+20)+"px";
 
         document.body.appendChild(heart);
 
         setTimeout(()=>{heart.remove();},4000);
     },300);
+}
+
+/* CONTROL DE MÚSICA */
+function controlMusica(){
+    let audio = document.getElementById("musica");
+    let btn = document.getElementById("btnMusica");
+
+    if(audio.paused){
+        audio.play();
+        btn.innerHTML = "Pausar Música 🎵";
+    } else {
+        audio.pause();
+        btn.innerHTML = "Reproducir Música ▶️";
+    }
 }
 
 </script>
